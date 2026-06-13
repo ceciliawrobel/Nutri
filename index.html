@@ -55,36 +55,37 @@
             margin-top: 20px;
         }
 
-        /* Área do Cabeçalho Totalmente Segura */
+        /* Área do Cabeçalho com grid para centralização perfeita */
         .header-app {
-            display: flex;
+            display: grid;
+            grid-template-columns: 110px 1fr 110px;
             align-items: center;
-            justify-content: flex-start;
             border-bottom: 2px solid var(--border-bloco);
             padding-bottom: 20px;
             margin-bottom: 25px;
-            gap: 20px;
-            width: 100%;
+            gap: 10px;
         }
 
         .logo-container {
-            flex: 0 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 110px;
+            justify-content: flex-start;
         }
 
         .logo-prefeitura {
-            width: 100%;
+            max-width: 90px;
             height: auto;
             display: block;
             mix-blend-mode: multiply;
         }
+        [data-theme="dark"] .logo-prefeitura {
+            /* Filtro opcional para a logo sobressair no tema escuro se necessário */
+            filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.3));
+        }
 
         .texto-header-container {
-            flex: 1;
             text-align: center;
+            grid-column: 2;
         }
 
         .texto-institucional {
@@ -111,12 +112,10 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        [data-theme="dark"] .setor-institucional { color: #1abc9c; }
 
         .theme-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+            grid-column: 3;
+            justify-self: flex-end;
             background-color: #2c3e50;
             color: white;
             border: none;
@@ -126,11 +125,30 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 10;
+            white-space: nowrap;
         }
         [data-theme="dark"] .theme-toggle {
             background-color: #f1c40f;
             color: #121212;
+        }
+
+        /* Responsividade para telas muito pequenas */
+        @media (max-width: 600px) {
+            .header-app {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .logo-container {
+                grid-column: 1;
+                justify-content: center;
+            }
+            .texto-header-container {
+                grid-column: 1;
+            }
+            .theme-toggle {
+                grid-column: 1;
+                justify-self: center;
+            }
         }
         
         /* Layout normal da tela */
@@ -244,11 +262,12 @@
             .theme-toggle, .botoes-container { display: none !important; }
             
             .header-app { 
+                grid-template-columns: 85px 1fr;
                 padding-bottom: 10px; 
                 margin-bottom: 20px; 
                 border-bottom: 2px solid #333 !important;
             }
-            .logo-container { width: 85px; }
+            .logo-prefeitura { max-width: 75px; mix-blend-mode: multiply !important; }
             .texto-header-container { padding-right: 0; }
             .texto-institucional { color: black !important; font-size: 16px; }
             .subtexto-institucional { color: black !important; font-size: 13px; }
@@ -334,17 +353,19 @@
 </script>
 
 <div class="container">
-    <button type="button" class="theme-toggle" onclick="alternarTema()" id="btnTema">Modo Dark 🌙</button>
-
+    
     <div class="header-app">
         <div class="logo-container">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABwKC9VAAAAMFBMVEVHcEwBAQEAAAECAgIDAwMEBAQFBQUGBgYHBwcICAkJCgoKCwsMDAwNDQ0ODg4PDw89pC0+AAAAEHRSTlMAESIzRFVmd4iZqru8zM3d7vcY9fQAAAGXSURUeNrt29tuwyAMBUALbUjd//9tFyep1E6bphK6T70gwsY+gAnb6fSfbE/Ea0R7Ij0Rh8R+IvdEbBKfEc8RrxGfEbcRrxEvEXsSdyX2fI8YEtN/RIyJ6S9ibmL6EisT09fEmph+IjZETG/iXhM3iT0x3SQuEzOJpURV4lIipUQtIlmJQ6KSiIidRCkiDolaiEsiHxEvieN7RPu7Yf8Y8bsh3f+Z6P5O7u8S00w/EfM7eW8S977E90zMe0bZf8aon1H6M/oR6r+3f0tMv8Skny9qZ5b93y368fO+XG606SbyE7mJuG6W77fFpJsidpM8b5ZtsU9RtkU/f97ny6U/b/9ymX669PPn6XKJ/fHpp325/D0+bZebfvrp06WfP0+XS3/efv7G9Evsz9vP35h+ifl523/bLzHpx9v+uF1+b79fXm765WW7XP758pYvb/nyW7685ctbvrzly1u+vOXLW7685ctbvrwffnk/fHk///J++PJ+N8v73S3vR8G7W8G7W8G7W8G7W8G7W8G7W8G7X8C7X8C7X8C7X8C7v4Z3v4Z3/8b0H369Tqc/X5rUfQAAAABJRU5ErkJggg==" alt="Logo Oficial Castro" class="logo-prefeitura">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABwKC9VAAAAeFBMVEVHcExbtf9btf9btf9btf9btf+AgID///9btf9btf9btf9btf9btf9btf9btf9btf9btf9btf9btf+srKyjo6Oenp6Xl5eTk5OPj4+Li4uEhISAgICAf39/f3+Pf3+Pf39/f39/f39/f39/f39/f39/f39/f39/f39/f3/0I0pDAAAAJXRSTlMAm93vEfXunKqqzMxdZneI9///M0RE/////7u7////ZgAAA7b/GPX1AAAC3klEQVRo3u2ZaXfCMBCFlbW0pS20hbIUR9S93P//X9wZUkNisAmZ9Hw650OAnTeTm8wkJTk5OTk5bYpEomE6SscD8fVfF0kkM5lsbndvby8bM1XF8M6XSTK92N9bYFzGfN0LIdfN6sZid2HAdG3b8XwIqR9WNoF589Wf9u7D5uGfCGEpGZfVshDCCmYthLAymC9vIeyp6T8shBD6E9NfRIYwFwTz+fIthBVEpBDGzBChQpALQYgKoZshvIUI7u8pSshd7F6WkA0Mv9i9IsT0Y/eKEBMbY8b3fA9CCCH3d3In6iCE0GOfg/5Zg37Ofv6G6eeYfL6onVn2f7fox8/7fIn96bXptf09Pr3tl5j0421/3C6/t98vLzf98rJdLv98ecsXt3x5y5e3fHnLl7d8ecuXt3x5y5f3wy/vhy/v51/eD1/e72Z5v7vl/Sh4dyt4dyt4dyt4dyt4dyt4dyt4dyt49wt49wt49wt49wt499fw7tfw7t+Y/sOv1+n050uTuq8vTeq+vjSp9fWlSa2vL01qfX1pUuvrS5NqfX1pUuvrS5NqfX1pUuvrS5NaX1+a1Pr60qS+r++bYfrS+fK+uW2G96XzE8N7bXgfyfAeP95v9f3bYfqivn9fOj80vL9UvK8UvHeXiveRCO89vbyPhHjvS+W9b/X1p7D+ZKhfc6jf/S0bFvWpD/VrvLOhfssT/fI+W6FfXv9K6JdPz2Do98fKGP16P/v8PMP62YfePzKsv81kMpn60w/rZ7/M/8R+N+Y/on6bSfs/sd8t6ccfNv3w6WUz9OOn/TL90f7pdNP6o9PNH6fXW39wutw0vWw3f3i56X/709+YfvT9R98vM6n7evvR9/p9k7rUvW+XUve+XS7ZpS6X7FL3XenC2fN2vF369Uun79cvnX5cv3T67fql06fql04/rV86fV76R0uG9E9v/WPlSfr3v/6R0n7g6x8pM6n9wOf9Z99W6Nfe6vszGPqf8enH89mnz8b8x/g0vUynP86v0+nPP/9q51bL+tQ/AAAAAElFTkSuQmCC" alt="Logo Oficial Castro" class="logo-prefeitura">
         </div>
+        
         <div class="texto-header-container">
             <div class="texto-institucional">Prefeitura Municipal de Castro</div>
             <div class="subtexto-institucional">Secretaria Municipal de Educação</div>
             <div class="setor-institucional">Alimentação Escolar</div>
         </div>
+
+        <button type="button" class="theme-toggle" onclick="alternarTema()" id="btnTema">Modo Dark 🌙</button>
     </div>
 
     <form id="checklistForm">
