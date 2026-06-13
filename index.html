@@ -55,67 +55,55 @@
             margin-top: 20px;
         }
 
-        /* Área do Cabeçalho com grid para centralização perfeita */
+        /* Área do Cabeçalho com Flexbox para Centralização Absoluta */
         .header-app {
-            display: grid;
-            grid-template-columns: 110px 1fr 110px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             border-bottom: 2px solid var(--border-bloco);
             padding-bottom: 20px;
             margin-bottom: 25px;
-            gap: 10px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .logo-prefeitura {
-            max-width: 90px;
-            height: auto;
-            display: block;
-            mix-blend-mode: multiply;
-        }
-        [data-theme="dark"] .logo-prefeitura {
-            /* Filtro opcional para a logo sobressair no tema escuro se necessário */
-            filter: drop-shadow(0px 0px 1px rgba(255,255,255,0.3));
+            text-align: center;
+            width: 100%;
         }
 
         .texto-header-container {
-            text-align: center;
-            grid-column: 2;
+            width: 100%;
+            padding: 0 10px;
         }
 
         .texto-institucional {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--text-header);
             margin: 0 0 6px 0;
             line-height: 1.3;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .subtexto-institucional {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-main);
-            margin: 0 0 4px 0;
+            margin: 0 0 6px 0;
         }
 
         .setor-institucional {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #1abc9c;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
+        /* Botão posicionado de forma independente para não empurrar o texto */
         .theme-toggle {
-            grid-column: 3;
-            justify-self: flex-end;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background-color: #2c3e50;
             color: white;
             border: none;
@@ -132,23 +120,16 @@
             color: #121212;
         }
 
-        /* Responsividade para telas muito pequenas */
+        /* Ajuste do botão em telas pequenas */
         @media (max-width: 600px) {
-            .header-app {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .logo-container {
-                grid-column: 1;
-                justify-content: center;
-            }
-            .texto-header-container {
-                grid-column: 1;
-            }
+            .container { margin-top: 50px; }
             .theme-toggle {
-                grid-column: 1;
-                justify-self: center;
+                top: -45px;
+                right: 50%;
+                transform: translateX(50%);
             }
+            .texto-institucional { font-size: 18px; }
+            .subtexto-institucional, .setor-institucional { font-size: 14px; }
         }
         
         /* Layout normal da tela */
@@ -262,16 +243,20 @@
             .theme-toggle, .botoes-container { display: none !important; }
             
             .header-app { 
-                grid-template-columns: 85px 1fr;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
                 padding-bottom: 10px; 
                 margin-bottom: 20px; 
                 border-bottom: 2px solid #333 !important;
+                width: 100% !important;
             }
-            .logo-prefeitura { max-width: 75px; mix-blend-mode: multiply !important; }
-            .texto-header-container { padding-right: 0; }
-            .texto-institucional { color: black !important; font-size: 16px; }
-            .subtexto-institucional { color: black !important; font-size: 13px; }
-            .setor-institucional { color: black !important; font-size: 13px; }
+            .texto-header-container { text-align: center !important; padding: 0 !important; }
+            .texto-institucional { color: black !important; font-size: 18px !important; text-align: center !important; }
+            .subtexto-institucional { color: black !important; font-size: 14px !important; text-align: center !important; }
+            .setor-institucional { color: black !important; font-size: 14px !important; text-align: center !important; }
             
             .perguntas-container { 
                 display: grid; 
@@ -353,19 +338,14 @@
 </script>
 
 <div class="container">
-    
+    <button type="button" class="theme-toggle" onclick="alternarTema()" id="btnTema">Modo Dark 🌙</button>
+
     <div class="header-app">
-        <div class="logo-container">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABwKC9VAAAAeFBMVEVHcExbtf9btf9btf9btf9btf+AgID///9btf9btf9btf9btf9btf9btf9btf9btf9btf9btf9btf+srKyjo6Oenp6Xl5eTk5OPj4+Li4uEhISAgICAf39/f3+Pf3+Pf39/f39/f39/f39/f39/f39/f39/f39/f39/f3/0I0pDAAAAJXRSTlMAm93vEfXunKqqzMxdZneI9///M0RE/////7u7////ZgAAA7b/GPX1AAAC3klEQVRo3u2ZaXfCMBCFlbW0pS20hbIUR9S93P//X9wZUkNisAmZ9Hw650OAnTeTm8wkJTk5OTk5bYpEomE6SscD8fVfF0kkM5lsbndvby8bM1XF8M6XSTK92N9bYFzGfN0LIdfN6sZid2HAdG3b8XwIqR9WNoF589Wf9u7D5uGfCGEpGZfVshDCCmYthLAymC9vIeyp6T8shBD6E9NfRIYwFwTz+fIthBVEpBDGzBChQpALQYgKoZshvIUI7u8pSshd7F6WkA0Mv9i9IsT0Y/eKEBMbY8b3fA9CCCH3d3In6iCE0GOfg/5Zg37Ofv6G6eeYfL6onVn2f7fox8/7fIn96bXptf09Pr3tl5j0421/3C6/t98vLzf98rJdLv98ecsXt3x5y5e3fHnLl7d8ecuXt3x5y5f3wy/vhy/v51/eD1/e72Z5v7vl/Sh4dyt4dyt4dyt4dyt4dyt4dyt4dyt49wt49wt49wt49wt499fw7tfw7t+Y/sOv1+n050uTuq8vTeq+vjSp9fWlSa2vL01qfX1pUuvrS5NqfX1pUuvrS5NqfX1pUuvrS5NaX1+a1Pr60qS+r++bYfrS+fK+uW2G96XzE8N7bXgfyfAeP95v9f3bYfqivn9fOj80vL9UvK8UvHeXiveRCO89vbyPhHjvS+W9b/X1p7D+ZKhfc6jf/S0bFvWpD/VrvLOhfssT/fI+W6FfXv9K6JdPz2Do98fKGP16P/v8PMP62YfePzKsv81kMpn60w/rZ7/M/8R+N+Y/on6bSfs/sd8t6ccfNv3w6WUz9OOn/TL90f7pdNP6o9PNH6fXW39wutw0vWw3f3i56X/709+YfvT9R98vM6n7evvR9/p9k7rUvW+XUve+XS7ZpS6X7FL3XenC2fN2vF369Uun79cvnX5cv3T67fql06fql04/rV86fV76R0uG9E9v/WPlSfr3v/6R0n7g6x8pM6n9wOf9Z99W6Nfe6vszGPqf8enH89mnz8b8x/g0vUynP86v0+nPP/9q51bL+tQ/AAAAAElFTkSuQmCC" alt="Logo Oficial Castro" class="logo-prefeitura">
-        </div>
-        
         <div class="texto-header-container">
             <div class="texto-institucional">Prefeitura Municipal de Castro</div>
             <div class="subtexto-institucional">Secretaria Municipal de Educação</div>
             <div class="setor-institucional">Alimentação Escolar</div>
         </div>
-
-        <button type="button" class="theme-toggle" onclick="alternarTema()" id="btnTema">Modo Dark 🌙</button>
     </div>
 
     <form id="checklistForm">
